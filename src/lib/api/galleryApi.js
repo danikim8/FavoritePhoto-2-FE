@@ -73,8 +73,9 @@ export async function uploadImage(file) {
       );
     }
 
+    // imageUrl은 Supabase Storage의 전체 public URL이므로 그대로 반환한다.
     const {imageUrl} = result;
-    return `${BASE_URL.replace('/api', '')}${imageUrl}`;
+    return imageUrl;
   } catch (error) {
     const message =
       error.message || '이미지 업로드 중 알 수 없는 오류가 발생했습니다.';
