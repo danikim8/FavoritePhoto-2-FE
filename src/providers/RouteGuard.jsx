@@ -51,6 +51,7 @@ export default function RouteGuard({children}) {
     if (isProtectedRoute && !user) {
       openModal({
         type: 'alert',
+        key: 'login-required',
         title: '로그인이 필요합니다.',
         description:
           '로그인 하시겠습니까?\n다양한 서비스를 편리하게 이용하실 수 있습니다.',

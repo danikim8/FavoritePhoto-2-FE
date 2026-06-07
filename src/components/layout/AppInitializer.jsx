@@ -18,6 +18,7 @@ export default function AppInitializer() {
         // 바로 뽑을 수 있으면 즉시 모달 표시
         openModal({
           type: 'point',
+          key: 'point-draw',
           children: <PointDrawModal />,
         });
       } else {
@@ -25,6 +26,7 @@ export default function AppInitializer() {
         setTimeout(() => {
           openModal({
             type: 'point',
+            key: 'point-draw',
             children: <PointDrawModal />,
           });
         }, data.remainSeconds * 1000); // 쿨타임이 끝난 후 자동으로 모달 열기

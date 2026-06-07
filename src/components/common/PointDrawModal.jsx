@@ -36,6 +36,7 @@ export default function PointDrawModal() {
       setTimeout(() => {
         openModal({
           type: 'point',
+          key: 'point-draw',
           children: <PointDrawModal />,
         });
       }, 3600 * 1000); //1시간 후 모달 재오픈
