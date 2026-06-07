@@ -12,6 +12,15 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {LoginSchema} from '@/schemas/login.schema';
 
+// 테스트용 시드 계정 (비밀번호는 시드에서 모두 '1234')
+const SEED_ACCOUNTS = [
+  {label: '슬퍼비비', email: 'user1@example.com'},
+  {label: '6시내고양이', email: 'user10@example.com'},
+  {label: '휴지필름', email: 'user11@example.com'},
+  {label: '이공계는팝핀', email: 'user12@example.com'},
+];
+const SEED_PASSWORD = '1234';
+
 export default function LoginPage() {
   const {
     register,
@@ -26,7 +35,7 @@ export default function LoginPage() {
   const {login} = useAuth();
   const router = useRouter();
 
-  const onSubmit = async data => {
+  const doLogin = async data => {
     try {
       const success = await login(data);
       if (success) {
@@ -45,6 +54,11 @@ export default function LoginPage() {
       });
     }
   };
+
+  const onSubmit = data => doLogin(data);
+
+  const handleQuickLogin = email =>
+    doLogin({email, password: SEED_PASSWORD});
 
   const handleGoogleLogin = () => {
     const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -103,6 +117,25 @@ export default function LoginPage() {
 
           <GoogleButton onClick={handleGoogleLogin} />
         </form>
+
+        {/* 테스트용 시드 계정 원클릭 로그인 */}
+        <div className="mt-8">
+          <p className="text-gray400 text-[12px] mb-3 text-center">
+            테스트 계정 (비번 1234)
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {SEED_ACCOUNTS.map(account => (
+              <button
+                key={account.email}
+                type="button"
+                onClick={() => handleQuickLogin(account.email)}
+                className="border border-gray400 text-gray200 text-[13px] rounded-xs py-2 hover:bg-gray500 transition-colors"
+              >
+                {account.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* 회원가입 링크 */}
         <div className="mt-11 text-center text-[14px] font-[400] pc:text-[16px]">
